@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Book your seat{% endblock %}
+
+{% block body %}
+
+
+<h2>Book your seat</h2><br>
+<form method="POST">
+{% csrf_token %}
+<div style="width: 28%; text-align: left">
+
+<center>Package Name: Shirdi</center>
+<br>
+Select boarding point:
+<select id="slct2" name="slct2" required>
+	<option value="" disabled selected>Select an option</option>
+    <option value="Sawad Naka BHW">Sawad Naka,BHW</option>
+    <option value="HDFC Bank ASN">HDFC Bank,ASN</option>
+    <option value="Post Office SHA">Post Office,SHA</option>
+    <!--<option value="Shuchak Naka DOM">Shuchak Naka,DOM</option>
+    <option value="Shilphata DOM">Shilphata,DOM</option>
+    <option value="Check Naka TH">Check Naka,TH</option>-->
+</select>
+<br><br>
+Enter number of passengers: <input type="number" required min="1" max="52" placeholder="" name="nop" id="nop" onchange="fare()">
+<br><br>
+<div class="container">
+
+        
+                <div class='input-group date' id='datepicker1'>
+                    <input type='text' class="form-control" name="datepicker1" required>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"><i class="bi bi-calendar-check bi-3x" style="width: 20px;"></i></span>
+                    </span>
+                </div>
+        
+<br>
+<center>
+<input type="text" readonly id="total" name="total" placeholder = "Payable amount">
+<br><br>
+Payment mode:  <input type="radio" id="offline" name="payment" value="offline" checked>
+  <label for="offline">Offline</label>
+  <input type="radio" id="online" name="payment" value="online">
+  <label for="online">Online</label><br><br>
+<p id = "as" name = "as">Available seats: {{ seats_available }}</p>
+<input type="submit" class="btn btn-success" value="Book"><br>
+{{ msg }}
+</center>
+</div>
+</form>
+
+
+
+{% comment %} Datepicker {% endcomment %}
+        <script type="text/javascript">
+            $(function() {
+                
+
+
+                Date.prototype.addDays = function(days) {//Function to add days to a selected date
+   			        var date = new Date(this.valueOf());
+ 			        date.setDate(date.getDate() + days);
+  				    return date;
+			    }
+			    // var date1 = new Date();
+			    // date1 = date1.addDays(5);
+			    function convert(date1) { // Convert Jul 31,2021 format to %d-%m-%Y we have to convert in this format because date are i=only disabled if they are in this format
+ 			 	    var date = new Date(date1),
+    				mnth = (""+(date.getMonth() + 1)).slice(-2),
+    				day = (""+date.getDate()).slice(-2);
+  				    return [day, mnth, date.getFullYear()].join("-");
+			    }
+			    //var date2 = convert(date1)
+			    //console.log(date2);
+                // disableSpecificDates.push(date2)
+                // d1 = disableSpecificDates[0]
+                // d2 = disableSpecificDates[1]
+                // console.log(d1)
+                // console.log(d2)
+                // console.log(typeof d1)
+                // console.log(Object.values(disableSpecificDates[0]))
+                // d2 = typeof disableSpecificDates
+                // d3 = typeof d1
+                // console.log(typeof d1)
+                // document.getElementById("d2").innerHTML = d2;
+                // document.getElementById("d3").innerHTML = d3;
+                // document.getElementById("d1").innerHTML = d1;
+                // var disableSpecificDates = ['30-7-2021'];
+                // console.log(disableSpecificDates)
+                // document.getElementById("demo").innerHTML = disableSpecificDates;
+
+                var date = new Date();
+                date = date.addDays(1)
+                var date_next_60days = new Date();
+                date_next_60days = date_next_60days.addDays(60);
+                $('#datepicker1').datepicker({
+                    //daysOfWeekDisabled: [1,2,3,4], //Disable days mon to thrus for Ashtavinayak Darshan Booking
+                    format: 'mm/dd/yyyy',
+                    startDate: date,
+                    endDate: date_next_60days,
+                    autoclose: true,
+                    
+                });
+                //$('#datepicker1').datepicker("setDate", date);
+            });
+        </script>
+        {% comment %} Datepicker end {% endcomment %}
+
+
+<script type="text/javascript">
+{% comment %} 
+<!--For onchange select-->
+
+    function populate(s1,s2){
+        var s1 = document.getElementById(s1);
+        var s2 = document.getElementById(s2);
+        s2.innerHTML = "";
+        if(s1.value == "mumbai darshan"){
+            var optionArray = ["|","sck|Shivaji Chowk,KYN","s1u|Sector 17,UNR","mca|Matka Chowk,AMB","snd|Shuchak Naka,DOM", "sd|Shilphata,DOM","cnt|Check Naka,TH"];
+        } else if(s1.value == "ashtavinayak darshan"){
+            var optionArray = ["|","sck|Shivaji Chowk,KYN","rnk|Ranjnoli,KYN","jht|Jupiter Hospital,TH"];
+        } else if(s1.value == "shirdi"){
+            var optionArray = ["|","snb|Sawad Naka,BHW","hba|HDFC Bank,ASN","pos|Post Office,SHA"];
+        }
+        for(var option in optionArray){
+            var pair = optionArray[option].split("|");
+            var newOption = document.createElement("option");
+            newOption.value = pair[0];
+            newOption.innerHTML = pair[1];
+            s2.options.add(newOption);
+        }
+    }
+// onchange select end {% endcomment %}
+
+// Dynamic price box
+    function fare() {
+        var ip = 650;
+        var nop = parseInt(document.getElementById('nop').value);
+        var t = document.getElementById('total');
+        var f = nop * ip;
+        t.value = f;
+    }
+</script>
+{% comment %} End dynamic price box {% endcomment %}
+
+{% endblock %}

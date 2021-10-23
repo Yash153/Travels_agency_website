@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bus Charter{% endblock %}
+
+{% block body %}
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
+    <div class="card">
+      <img src="{% static 'images/52_seat.jpg' %}" class="card-img-top" alt="..." style = "height: 325px">
+      <div class="card-body">
+        <h5 class="card-title">52 Seater Bus</h5>
+        <p class="card-text">Rent a 52 seater non ac bus from us as per your convenience </p>
+        <a href="{% url 'actualcharter_52seater' %}" class="btn btn-primary">Book Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="{% static 'images/17_seat.jpg' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">17 Seater Bus</h5>
+        <p class="card-text">Rent a 17 seater non ac traveller from us as per your convenience</p>
+        <a href="{% url 'actualcharter_17seater' %}" class="btn btn-primary">Book Now</a>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+ 
+{% endblock %}

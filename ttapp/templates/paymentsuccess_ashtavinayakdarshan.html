@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Success {% endblock  %}
+
+{% block body %}
+
+<div class="info">
+<div class="container" style="text-align:center;">
+<h1>Payment Success</h1>
+<br>
+<h3>Congratulations! You have successfully done the payment. You will get call from our team regarding details of booking.</h3>
+<a class="btn btn-primary btn-lg signup-button" href="{% url "generateinvoice_ashtavinayakdarshan" pk=id %}">Print Invoice</a>
+</div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+
+</script>
+
+{% endblock  %}

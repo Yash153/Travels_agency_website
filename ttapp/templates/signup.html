@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Signup{% endblock %}
+
+
+
+{% block body %}
+
+<br><h3>SignUp</h3>
+<br>
+<form method="POST">
+
+    {% csrf_token %}
+
+<input type="text" name="fn" placeholder="Enter first name" class="form-control form-control-sm" style="width: 28%;" required><br>
+<input type="text" name="ln" placeholder="Enter last name" class="form-control form-control-sm" style="width: 28%;" required><br>
+<input type="text" name="un" placeholder="Enter username" class="form-control form-control-sm" style="width: 28%;" required><br>
+<input type="number" name="mo" placeholder="Enter mobile number" class="form-control form-control-sm" style="width: 28%;" minlength="10" maxlength="10" required><br>   
+<input type="email" name="em" placeholder="Enter email" class="form-control form-control-sm" style="width: 28%;" required><br> 
+
+<input type="submit" class="btn btn-outline-success btn-sm" value="Signup">
+</form>
+
+{{ msg }}
+
+{% endblock %}

@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% block title %} Bus Charter {% endblock  %}
+{% block body %}
+<h2>Bus Charter</h2>
+
+
+<form method = "POST" id="distance_form">
+{% csrf_token %}
+
+
+<div class="form-group"  style = "width: 28%"> <input class="form-control" id="from_places" placeholder="Enter pickup location" /> <input id="origin" name="origin" required="" type="hidden"></div>
+<br>
+
+<div class="form-group"  style = "width: 28%"><input class="form-control" id="to_places" placeholder="Enter drop location" /> <input id="destination" name="destination" required="" type="hidden"></div>
+<br>
+
+<select name="category" id="category" required>
+<option value="" disabled selected>Select an option</option>
+<option value="corporate tour">Corporate tour</option>
+<option value="pilgrim tour">Pilgrim tour</option>
+<option value="wedding ocassion">Wedding ocassion</option>
+<option value="group tour">Group tour</option>
+<option value="other">Other</option>
+</select>
+<br><br>
+
+            
+
+    <input type="number" id = "amount" name = "amount" required step = "any" placeholder = "Amount" readonly><br><br>
+    <input type="text" name="time" id="time" readonly><br><br>
+    <input type="text" name="distance" id="distance" readonly><br><br>
+    <div class="container" style="width: 28%;">
+                <div class='input-group date' id='datepicker1'>
+                    <input type='text' class="form-control" name="datepicker1" id="datepicker11">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <br>
+            <div class="container" style="width: 28%;">
+                <div class='input-group date' id='datepicker2'>
+                    <input type='text' class="form-control" name="datepicker2" id="datepicker22" onChange="dayscalculator('datepicker11', 'datepicker22')">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <br>
+    <textarea name="additional_info" id="additional_info" cols="30" rows="2" style="resize: none;" placeholder = "Additonal Info"></textarea>
+    <br><br>
+    <input type="submit" value="Book">
+</form>
+
+{{ msg }}
+
+
+<script type="text/javascript">
+
+    var no_of_days_to_be_disabled = 0;
+    var total_no_of_days_booked = 0;
+
+
+    $(document).ready(function() {
+            var disableSpecificDates = {{ db|safe }};
+            console.log(disableSpecificDates);
+            
+			Date.prototype.addDays = function(days) {
+   			 var date = new Date(this.valueOf());
+ 			   date.setDate(date.getDate() + days);
+  				  return date;
+			}
+			function convert(date1) {
+ 			 	var date = new Date(date1),
+    				mnth = (""+(date.getMonth() + 1)).slice(-2),
+    				day = (""+date.getDate()).slice(-2);
+  				return [day, mnth, date.getFullYear()].join("-");
+			}
+    
+    
+			var date = new Date();
+            date = date.addDays(1)
+            var date_next_60days = new Date();
+            date_next_60days = date_next_60days.addDays(60);
+            
+                        $('#datepicker1').datepicker({
+			                startDate: date,
+                            format: 'dd/mm/yyyy',
+                            endDate: date_next_60days,
+                            autoclose: true,
+
+                            onSelect: function (date) {
+                                var date2 = $('#datepicker1').datepicker('getDate');
+                                date2.setDate(date2.getDate());
+                                $('#datepicker2').datepicker('setDate', date2);
+                                //sets minDate to dt1 date
+                                $('#datepicker2').datepicker('option', 'minDate', date2);
+                            },
+                            			    	
+                            beforeShowDay: function(date) {
+                                dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+                                if (disableSpecificDates.indexOf(dmy) != -1) {
+                                    return false;
+                                }
+                                else {
+                                    return true;
+                                }
+
+                            }
+                        });
+
+                        $('#datepicker2').datepicker({
+			                startDate: date,
+                            format: 'dd/mm/yyyy',
+                            endDate: date_next_60days,
+                            autoclose: true,
+
+
+                            onClose: function () {
+                                var dt1 = $('#datepicker1').datepicker('getDate');
+                                console.log(dt1);
+                                var dt2 = $('#datepicker2').datepicker('getDate');
+                                if (dt2 == dt1) {
+                                    var minDate = $('#datepicker2').datepicker('option', 'minDate');
+                                    $('#datepicker2').datepicker('setDate', minDate);
+                                }
+                            },                            
+
+			    	
+                            beforeShowDay: function(date) {
+                                dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+                                if (disableSpecificDates.indexOf(dmy) != -1) {
+                                    return false;
+                                }
+                                else {
+                                    return true;
+                                }
+
+                                
+                            }
+                        });
+                    console.log(total_no_of_days_booked)
+                    console.log(no_of_days_to_be_disabled) 
+
+        });
+
+        
+
+        function dayscalculator(s1, s2)
+        {
+            var s1 = document.getElementById(s1);
+            var s2 = document.getElementById(s2);
+
+            function parseDate(str) {
+                var mdy = str.split('/');
+                return new Date(mdy[2], mdy[1]-1, mdy[0]);//yyyy/mm/dd
+            }
+
+            function datediff(first, second) {
+                // Take the difference between the dates and divide by milliseconds per day.
+                // Round to nearest whole number to deal with DST.
+                return Math.round((second-first)/(1000*60*60*24));
+            }
+
+            var days = datediff(parseDate(s1.value), parseDate(s2.value))
+            total_no_of_days_booked = +days + 1;
+            no_of_days_to_be_disabled = +days - 1;
+            //console.log(days)
+            console.log(total_no_of_days_booked)
+            console.log(no_of_days_to_be_disabled)   
+            return days;
+
+        }
+
+        // AutoComplete function
+
+        $(function() {
+        // add input listeners
+        console.log($('#origin').val())
+        google.maps.event.addDomListener(window, 'load', function () {
+            var from_places = new google.maps.places.Autocomplete(document.getElementById('from_places'));
+            var to_places = new google.maps.places.Autocomplete(document.getElementById('to_places'));
+
+            google.maps.event.addListener(from_places, 'place_changed', function () {
+                var from_place = from_places.getPlace();
+                var from_address = from_place.formatted_address;
+                $('#origin').val(from_address);
+            });
+
+            google.maps.event.addListener(to_places, 'place_changed', function () {
+                var to_place = to_places.getPlace();
+                var to_address = to_place.formatted_address;
+                $('#destination').val(to_address);
+            });
+
+        });
+        // calculate distance
+        function calculateDistance() {
+            console.log("calculateDistance called");
+            var origin = $('#origin').val();
+            var destination = $('#destination').val();
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix(
+                {
+                    origins: [origin],
+                    destinations: [destination],
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    // unitSystem: google.maps.UnitSystem.IMPERIAL, // miles and feet.
+                    unitSystem: google.maps.UnitSystem.metric, // kilometers and meters.
+                    avoidHighways: false,
+                    avoidTolls: false
+                }, callback);
+        }
+        // get distance results
+        function callback(response, status) {
+            if (status != google.maps.DistanceMatrixStatus.OK) {
+                $('#result').html(err);
+            } else {
+                var origin = response.originAddresses[0];
+                var destination = response.destinationAddresses[0];
+                if (response.rows[0].elements[0].status === "ZERO_RESULTS") {
+                    $('#result').html("Better get on a plane. There are no roads between "  + origin + " and " + destination);
+                } else {
+                    var distance = response.rows[0].elements[0].distance;
+                    var duration = response.rows[0].elements[0].duration;
+                    console.log(response.rows[0].elements[0].distance);
+                    console.log(response.rows[0].elements[0].duration)
+                    var distance_in_kilo = distance.value / 1000; // the kilom
+                    var distance_in_mile = distance.value / 1609.34; // the mile
+                    var duration_text = duration.text;
+                    var duration_value = duration.value;
+                    console.log(duration_text)
+
+                    var amt_final = distance_in_kilo * 35
+                    amt_final = amt_final.toFixed(2);
+                    
+                    $('#in_mile').text(distance_in_mile.toFixed(2));
+                    $('#in_kilo').text(distance_in_kilo.toFixed(2));
+                    $('#duration_text').text(duration_text);
+                    document.getElementById("time").value = duration_text;
+                    document.getElementById("distance").value = distance_in_kilo;
+                    document.getElementById("amount").value = amt_final;
+                    $('#duration_value').text(duration_value);
+                    $('#from').text(origin);
+                    $('#to').text(destination);
+                }
+            }
+        }
+        // print results on submit the form
+            $('#distance_form').on('change', function(e){
+                var origin = $('#origin').val();
+                var destination = $('#destination').val();
+                if((origin != null || origin != "" || origin != undefined )&& (destination != null || destination != "" || destination != undefined)){
+                    e.preventDefault();
+                    calculateDistance(); // How to avoid running of calculateDistance() until both addresses are not filled??
+                                         // Surround calculateDistance with try catch? // Current one not working. 
+
+                }
+            });
+
+        });
+
+</script>
+
+
+{% endblock  %}

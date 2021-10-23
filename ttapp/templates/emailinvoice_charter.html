@@ -1,0 +1,30 @@
+<div style="background-color: rgb(228, 228, 228);">
+    <div style="margin: 20px; background-color: #fff;">
+<pre>
+Hi {{ user.name }},
+Your booking with order id: {{order.unique_id}} has been placed successfully.
+
+Your booking details are shown below -
+From: {{ order.source }}
+To:{{ order.destination }}
+Date of travel: {{ order.date_booked }} 
+Date released: {{ order.date_released }} 
+
+Total:{{order.amount}}
+
+{% if order.payment_mode == "online" and payment == "CANCELED" %}
+<p>Your refund will be automatically transfered to your bank account</p>
+{% endif %}
+
+You will get a call from our executive regarding boarding instruction
+
+We have attached the invoice for your order with this mail.
+
+Thanks for trusting us and using our services!
+
+Sincerely,
+TT Team
+</pre>
+
+    </div>
+</div>

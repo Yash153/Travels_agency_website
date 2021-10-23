@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book{% endblock %}
+
+{% block body %}
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
+    <div class="card">
+      <img src="{% static 'images/md.png' %}" class="card-img-top" alt="..." style = "height: 320px">
+      <div class="card-body">
+        <h5 class="card-title">Mumbai Darshan</h5>
+        <p class="card-text">
+        <b>Time duration:</b> 1 Day <br>
+        <b>Places visited:</b> Gateway of India, Juhu beach and 11 other places <br>
+        <b>Price:</b> 650 per seat <br>
+        <b>Stay:</b> Not applicable
+        </p>
+        <a href="{% url 'actualbooking_mumbaidarshan' %}" class="btn btn-primary">Book Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="{% static 'images/shirdi.jpg' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Shirdi</h5>
+        <p class="card-text"><b>Time duration:</b> 1 Day <br>
+        <b>Places visited:</b>  Includes visit to Sai Baba Temple at Shirdi <br>
+        <b>Price:</b> 650 per seat <br>
+        <b>Stay:</b> Not applicable</p>
+        <a href="{% url 'actualbooking_shirdi' %}" class="btn btn-primary">Book Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="{% static 'images/Ashtavinayakas.jpg' %}" class="card-img-top" alt="..." style = "height: 320px">
+      <div class="card-body">
+        <h5 class="card-title">Ashtavinayak Darshan</h5>
+        <p class="card-text"><b>Time duration:</b> 3 Days, 3 Nights <br>
+        <b>Places visited:</b> 8 ancient holy temples of Ganesha which are situated pune And Alandi. <br>
+        <b>Price:</b> 3200 per seat <br>
+        <b>Stay:</b> Group lodging, Food inclusive</p>
+        <a href="{% url 'actualbooking_ashtavinayakdarshan' %}" class="btn btn-primary">Book Now</a>
+      </div>
+    </div>
+  </div>
+  
+ 
+{% endblock %}

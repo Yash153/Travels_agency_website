@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block body %}
+<br><h3>Login</h3>
+<br>
+<form method="POST">
+
+    {% csrf_token %}
+
+<input type="text" name="un" placeholder="Enter username" class="form-control form-control-sm" style="width: 28%;" required><br>
+
+<input type="password" name="pw" placeholder="Enter password" class="form-control form-control-sm" style="width: 28%;" required><br>
+
+<input type="submit" class="btn btn-outline-success btn-sm" value="Login">
+<br><br>
+<a href="{% url 'resetpassword' %}">Forgot Password?</a>
+
+</form>
+{% endblock %}
