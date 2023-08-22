@@ -16,21 +16,21 @@
         <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-            <img src="{% static 'images/md/GOI.jpg' %}" class="d-block w-100 " alt="...">
+            <img src="https://github.com/Yash153/Travels_agency_website/blob/master/ttapp/static/images/md/GOI.jpg?raw=true" class="d-block w-100 " alt="...">
             </div>
             <div class="carousel-item">
-            <img src="{% static 'images/md/NSC.png' %}" class="d-block w-100 " alt="...">
+            <img src="https://github.com/Yash153/Travels_agency_website/blob/master/ttapp/static/images/md/HA.png?raw=true" class="d-block w-100 " alt="...">
             </div>
             <div class="carousel-item">
-            <img src="{% static 'images/md/HA.png' %}" class="d-block w-100 " alt="...">
+            <img src="https://github.com/Yash153/Travels_agency_website/blob/master/ttapp/static/images/md/KNG.jpg?raw=true" class="d-block w-100 " alt="...">
             </div>
             <div class="carousel-item">
-            <img src="{% static 'images/md/KNG.png' %}" class="d-block w-100 " alt="...">
+            <img src="https://github.com/Yash153/Travels_agency_website/blob/master/ttapp/static/images/md/NSC.jpg?raw=true" class="d-block w-100 " alt="...">
             </div>
-            <div class="carousel-item">
+            {% comment %} <div class="carousel-item">
             <img src="{% static 'images/md/TWA.png' %}" class="d-block w-100 " alt="...">
-            </div>
-            
+            </div> {% endcomment %}
+
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -48,7 +48,7 @@
 </div>
 <div class = "form col-lg-8" >
 Package Name: Mumbai Darshan
-<br><br>  
+<br><br>
 Select boarding point:
 <select id="slct2" name="slct2" required>
 	<option value="" disabled selected>Select an option</option>
@@ -64,14 +64,14 @@ Enter number of passengers: <input type="number" required min="1" max="52" place
 <br><br>
 <div class="container">
 
-        
-                <div class='input-group date input-group-sm' id='datepicker1' style = "width: 50%">
-                    <input type='text' class="form-control form-control-sm" name="datepicker1" required style="height: 7px;">
+
+                <div class='input-group date input-group-sm' id='datepicker1' style = "width: 40%">
+                    <input type='text' class="form-control form-control-sm" name="datepicker1" required style="height: 7px;" placeholder = "Date of travel">
                     <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"><i class="bi bi-calendar-check bi-3x" style="width: 20px;"></i></span>
+                        <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-        
+
 <br>
 
 <input type="text" readonly id="total" name="total" placeholder = "Payable amount">
@@ -93,7 +93,7 @@ Payment mode:  <input type="radio" id="offline" name="payment" value="offline" c
 {% comment %} Datepicker {% endcomment %}
         <script type="text/javascript">
             $(function() {
-                
+
 
 
                 Date.prototype.addDays = function(days) {//Function to add days to a selected date
@@ -127,7 +127,7 @@ Payment mode:  <input type="radio" id="offline" name="payment" value="offline" c
                 // var disableSpecificDates = ['30-7-2021'];
                 // console.log(disableSpecificDates)
                 // document.getElementById("demo").innerHTML = disableSpecificDates;
-                
+
                 var date = new Date();
                 date = date.addDays(1)
                 var date_next_60days = new Date();
@@ -147,7 +147,7 @@ Payment mode:  <input type="radio" id="offline" name="payment" value="offline" c
 
 
 <script type="text/javascript">
-{% comment %} 
+{% comment %}
 <!--For onchange select-->
 
     function populate(s1,s2){
